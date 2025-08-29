@@ -1,0 +1,461 @@
+.login-container {
+    min-height: 100vh;
+    background-color: #f9fafb;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .logo-header {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+    
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .logo-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 5px solid #4c047c;
+    border-radius: 0.25rem;
+  }
+  
+  .logo-text {
+    color: #4c047c;
+    font-weight: 600;
+    font-size: 1.25rem;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+  }
+  
+  .content-wrapper {
+    width: 100%;
+    max-width: 72rem;
+  }
+  
+  .login-card {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    
+  }
+  
+  .card-content {
+    display: flex;
+    min-height: 500px;
+  }
+  
+  .left-section {
+    flex: 1;
+    background-color: #4c047c;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    position: relative;
+  }
+  
+  .dashboard-preview {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .preview-container {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    max-width: 28rem;
+    width: 100%;
+  }
+  
+  .preview-image {
+    width: 100%;
+    height: auto;
+    border-radius: 0.25rem;
+  }
+  
+  .text-content {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    }
+  
+  .main-heading {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .description {
+    color: #c4b5fd;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .navigation-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-top: 1rem;
+  }
+  
+  .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+  }
+  
+  .dot-active {
+    background-color: white;
+  }
+  
+  .dot-inactive {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .right-section {
+    flex: 1;
+    padding: 1.25rem 2rem 2rem 2rem; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    background: white;
+  }
+  
+  .form-container {
+    max-width: 22rem; 
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .welcome-title {
+    text-align: left;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.3rem; 
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 1rem; 
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; 
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem; 
+  }
+  
+  .form-label {
+    font-size: 0.9rem; 
+    font-weight: 500;
+    color: #374151;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .form-input {
+    height: 2.5rem; 
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    padding: 0 2.25rem 0 0.65rem; 
+    font-size: 0.8rem; 
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    width: 80%; 
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  }
+  
+  .form-input::placeholder {
+    color: #9ca3af;
+  }
+  
+  .password-container {
+    position: relative;
+    width: 80%; 
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+  
+  .password-toggle:hover {
+    color: #6b7280;
+  }
+  
+  .forgot-password {
+    text-align: left;
+    font-family: 'Roboto', sans-serif;
+    
+  }
+  
+  .forgot-link {
+    font-size: 0.8rem; 
+    color: #6b7280;
+    text-decoration: none;
+  }
+  
+  .forgot-link:hover {
+    color: #7c3aed;
+  }
+  
+  .login-button {
+    width: 28%; 
+    height: 1.8rem; 
+    background-color: #d1d5db;
+    color: #6b7280;
+    font-weight: 500;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-size: 0.8rem; 
+    transition: background-color 0.15s ease-in-out;
+  }
+  
+  .login-button:hover {
+    background-color: #9ca3af;
+  }
+  
+  .register-section {
+    text-align: left;
+    padding-top: 0.75rem; 
+  }
+  
+  .register-text {
+    font-size: 0.8rem; 
+    color: #6b7280;
+    font-family: 'Roboto', sans-serif;
+    
+  }
+  
+  .register-link {
+    color: #4c047c;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  
+  .register-link:hover {
+    color: #6d28d9;
+  }
+  
+  .eye-icon {
+    width: 0.9rem; 
+    height: 0.9rem;
+  }
+  
+@media (max-width: 1024px) {
+  .card-content {
+    flex-direction: column;
+  }
+
+  .left-section {
+    padding: 1.5rem;
+  }
+
+  .preview-container {
+    max-width: 100%;
+  }
+
+  .right-section {
+    padding: 1rem 1.25rem 1.5rem 1.25rem;
+  }
+
+  .form-container {
+    max-width: 26rem;
+  }
+
+  .form-input,
+  .password-container {
+    width: 100%;
+  }
+
+  .login-button {
+    width: 40%;
+  }
+}
+
+@media (max-width: 640px) {
+  .logo-header {
+    padding: 1.25rem 0;
+  }
+
+  .content-wrapper {
+    max-width: 100%;
+  }
+
+  .left-section {
+    display: none; /* hide preview column on mobile */
+  }
+
+  .card-content {
+    flex-direction: column;
+    min-height: unset;
+  }
+
+  .right-section {
+    width: 100%;
+    padding: 1rem; /* comfortable mobile padding */
+    height: 100%;
+  }
+
+  .text-content {
+    padding: 0 0.25rem;
+  }
+
+  .main-heading {
+    font-size: 1.05rem;
+  }
+
+  .description {
+    font-size: 0.8rem;
+  }
+
+  .welcome-title {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .form {
+    gap: 0.6rem;
+    align-items: stretch; /* allow full-width children */
+    width: 100%;
+  }
+
+  .form-label {
+    font-size: 0.8rem;
+  }
+
+  /* Full-width inputs on mobile with space for eye icon */
+  .form-input {
+    width: 100%;
+    max-width: 90%;
+    height: 2.75rem; /* comfortable touch height */
+    font-size: 0.9rem;
+    padding-right: 2.25rem; /* keep room for eye icon */
+    box-sizing: border-box;
+  }
+
+  .password-container {
+    width: 100%;
+  }
+
+  .password-toggle {
+    right: 2.3rem;
+    height: 1.1rem;
+    width: 1.1rem;
+  }
+
+  .eye-icon {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .forgot-link {
+    font-size: 0.85rem;
+  }
+
+  .login-button {
+    width: 90%;
+    height: 2.5rem;
+    font-size: 0.95rem;
+  }
+
+  .register-section {
+    padding-top: 0.6rem;
+  }
+
+  .register-text {
+    font-size: 0.9rem;
+  }
+}
+  
+/* Error and Success Messages */
+.error-message {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.success-message {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #16a34a;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Field Error Messages */
+.field-error {
+  color: #dc2626;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Form Input Error State */
+.form-input.error {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 1px #dc2626;
+}
+
+.form-input.error:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+}
+
+/* Disabled Button State */
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+  

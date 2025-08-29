@@ -1,4 +1,5 @@
 /* Dashboard Main Layout */
+/* Dashboard Main Layout */
 .dashboard {
   min-height: 100vh;
   background-color: #f9fafb;
@@ -9,11 +10,13 @@
 .dashboard-content {
   display: flex;
   flex: 1;
+  /* Add this rule to align items to the top */
+  align-items: flex-start;
 }
 
 .main-content {
   flex: 1;
-  padding: 2rem;
+  padding: 1rem;
   background-color: white;
   overflow-y: auto;
 }
@@ -24,7 +27,7 @@
 }
 
 .section-header {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 /* Inline Header with Icons */
@@ -32,7 +35,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .section-title {
@@ -186,7 +189,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   gap: 1rem;
   flex-wrap: wrap;
 }

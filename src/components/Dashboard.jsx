@@ -1,98 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Dashboard.css';
-// import Header from './dashboard/Header';
 import Sidebar from './dashboard/Sidebar';
 import CandidatesTable from './dashboard/CandidatesTable';
 import { useAuth } from '../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import { useDisclosure } from "@heroui/react";
 import AddCandidateModal from './dashboard/AddCandidateModal';
+import { fetchCandidates } from '../services/userService';
 
 const Dashboard = () => {
-  const { user, isAuthenticated, loading, logout } = useAuth();
+  const { isAuthenticated, loading, logout } = useAuth();
   const [selectedStatus, setSelectedStatus] = useState('Status');
   const [selectedPosition, setSelectedPosition] = useState('Position');
   const [searchQuery, setSearchQuery] = useState('');
   const [showUserMenu, setShowUserMenu] = useState(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  // Sample candidates data
-  const [candidates, setCandidates] = useState([
-    {
-      id: 1,
-      name: 'Jacob William',
-      email: 'jacob.william@example.com',
-      phone: '(252) 555-0111',
-      position: 'Senior Developer',
-      status: 'New',
-      experience: '1+',
-      action: 'ellipsis'
-    },
-    {
-      id: 2,
-      name: 'Guy Hawkins',
-      email: 'kenzi.lawson@example.com',
-      phone: '(907) 555-0101',
-      position: 'Human Resource I...',
-      status: 'New',
-      experience: '',
-      action: 'ellipsis'
-    },
-    {
-      id: 3,
-      name: 'Arlene McCoy',
-      email: 'arlene.mccoy@example.com',
-      phone: '(302) 555-0107',
-      position: 'Full Time Designer',
-      status: 'Selected',
-      experience: '',
-      action: 'ellipsis'
-    },
-    {
-      id: 4,
-      name: 'Leslie Alexander',
-      email: 'willie.jennings@example.com',
-      phone: '(207) 555-0119',
-      position: 'Full Time Developer',
-      status: 'Rejected',
-      experience: '0',
-      action: 'ellipsis'
-    }
-  ]);
+  const [candidates, setCandidates] = useState([]);
 
-  // Filter candidates based on search and filters
+  // 🔹 Function to fetch candidates
+  const getCandidates = async () => {
+    try {
+      const data = await fetchCandidates();
+      console.log('Fetched data', data);
+      setCandidates(data);
+    } catch (error) {
+      console.error("Failed to fetch candidates", error);
+    }
+  };
+
+  // 🔹 Fetch on mount
+  useEffect(() => {
+    getCandidates();
+  }, []);
+
   const filteredCandidates = candidates.filter(candidate => {
-    const matchesSearch = candidate.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch =
+      candidate.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       candidate.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       candidate.position.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesStatus = selectedStatus === 'Status' || candidate.status === selectedStatus;
-    const matchesPosition = selectedPosition === 'Position' || candidate.position.includes(selectedPosition);
+    const matchesStatus =
+      selectedStatus === 'Status' || candidate.status === selectedStatus;
+
+    const matchesPosition =
+      selectedPosition === 'Position' || candidate.position.includes(selectedPosition);
 
     return matchesSearch && matchesStatus && matchesPosition;
   });
 
-  // Handle status change
   const handleStatusChange = (candidateId, newStatus) => {
     setCandidates(prev =>
       prev.map(candidate =>
-        candidate.id === candidateId
+        candidate._id === candidateId
           ? { ...candidate, status: newStatus }
           : candidate
       )
     );
   };
 
-  // Handle candidate actions
   const handleCandidateAction = (candidateId, action) => {
-    switch (action) {
-      case 'download':
-        console.log(`Downloading resume for candidate ${candidateId}`);
-        break;
-      case 'delete':
-        setCandidates(prev => prev.filter(candidate => candidate.id !== candidateId));
-        break;
-      default:
-        break;
+    if (action === 'delete') {
+      setCandidates(prev => prev.filter(candidate => candidate._id !== candidateId));
     }
   };
 
@@ -101,18 +69,11 @@ const Dashboard = () => {
     setShowUserMenu(false);
   };
 
-  // Show loading state
-  if (loading) {
-    return <div className="loading">Loading...</div>;
-  }
-
-  // Redirect to login if not authenticated
-  if (!isAuthenticated) {
-    return <Navigate to="/login" />;
-  }
+  if (loading) return <div className="loading">Loading...</div>;
+  if (!isAuthenticated) return <Navigate to="/login" />;
 
   return (
-    <div className="">
+    <div className="dashobard">
       <div className="dashboard-content">
         <Sidebar />
         <main className="main-content">
@@ -179,6 +140,8 @@ const Dashboard = () => {
                   >
                     <option value="Status">Status</option>
                     <option value="New">New</option>
+                    <option value="Scheduled">Scheduled</option>
+                    <option value="Ongoing">Ongoing</option>
                     <option value="Selected">Selected</option>
                     <option value="Rejected">Rejected</option>
                   </select>
@@ -213,24 +176,29 @@ const Dashboard = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </div>
-                    <div>
-                    <button
-                  className="add-candidate-btn"
-                  onClick={onOpen}
-                >
-                  Add Candidate
-                </button>
+                <div>
+                  <button
+                    className="add-candidate-btn"
+                    onClick={onOpen}
+                  >
+                    Add Candidate
+                  </button>
 
-                <AddCandidateModal isOpen={isOpen} onOpenChange={onOpenChange} />
-                    </div>
-                
+                  <AddCandidateModal
+                    isOpen={isOpen}
+                    onOpenChange={onOpenChange}
+                    onCandidateAdded={getCandidates}
+                  />
+
+                </div>
+
               </div>
             </div>
 
             <CandidatesTable
               candidates={filteredCandidates}
               onStatusChange={handleStatusChange}
-              onAction={handleCandidateAction}
+              
             />
           </div>
         </main>

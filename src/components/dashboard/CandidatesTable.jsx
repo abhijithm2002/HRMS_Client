@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './CandidatesTable.css';
+import { updateCandidateStatus } from '../../services/userService';
 
 const CandidatesTable = ({ candidates, onStatusChange, onAction }) => {
   const [openActionMenu, setOpenActionMenu] = useState(null);
@@ -36,9 +37,16 @@ const CandidatesTable = ({ candidates, onStatusChange, onAction }) => {
     setOpenActionMenu(openActionMenu === candidateId ? null : candidateId);
   };
 
-  const handleStatusChange = (candidateId, newStatus) => {
-    onStatusChange(candidateId, newStatus);
-    setOpenActionMenu(null);
+  const handleStatusChange = async (candidateId, newStatus) => {
+    console.log('candidateid', candidateId, newStatus)
+    try {
+      await updateCandidateStatus(candidateId, newStatus);
+      onStatusChange(candidateId, newStatus); 
+      setOpenActionMenu(null);
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      alert("Failed to update status. Try again!");
+    }
   };
 
   const handleAction = (candidateId, action) => {
@@ -63,7 +71,7 @@ const CandidatesTable = ({ candidates, onStatusChange, onAction }) => {
         </thead>
         <tbody>
           {candidates.map((candidate, index) => (
-            <tr key={candidate.id} className="table-row">
+            <tr key={candidate._id} className="table-row">
               <td className="sr-no">{String(index + 1).padStart(2, '0')}</td>
               <td className="candidate-name">{candidate.name}</td>
               <td className="candidate-email">{candidate.email}</td>
@@ -77,10 +85,12 @@ const CandidatesTable = ({ candidates, onStatusChange, onAction }) => {
                 ) : (
                   <select
                     value={candidate.status}
-                    onChange={(e) => handleStatusChange(candidate.id, e.target.value)}
+                    onChange={(e) => handleStatusChange(candidate._id, e.target.value)}
                     className={`status-select ${getStatusStyle(candidate.status)}`}
                   >
                     <option value="New">New</option>
+                    <option value="Scheduled">Scheduled</option>
+                    <option value="Ongoing">Ongoing</option>
                     <option value="Selected">Selected</option>
                     <option value="Rejected">Rejected</option>
                   </select>
@@ -98,28 +108,7 @@ const CandidatesTable = ({ candidates, onStatusChange, onAction }) => {
                   </svg>
                 </button>
                 
-                {openActionMenu === candidate.id && (
-                  <div className="action-dropdown">
-                    <button
-                      className="dropdown-item"
-                      onClick={() => handleAction(candidate.id, 'download')}
-                    >
-                      <svg className="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      Download Resume
-                    </button>
-                    <button
-                      className="dropdown-item"
-                      onClick={() => handleAction(candidate.id, 'delete')}
-                    >
-                      <svg className="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                      Delete Candidate
-                    </button>
-                  </div>
-                )}
+                
               </td>
             </tr>
           ))}

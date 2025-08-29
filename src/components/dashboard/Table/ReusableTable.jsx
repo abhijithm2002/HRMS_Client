@@ -6,7 +6,6 @@ const ReusableTable = ({ data, columns, onAction }) => {
   const [openActionMenu, setOpenActionMenu] = useState(null);
   const dropdownRef = useRef(null);
 
-  // Closes the dropdown when a click occurs outside of it.
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

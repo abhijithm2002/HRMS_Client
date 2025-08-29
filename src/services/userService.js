@@ -54,3 +54,27 @@ export const updateEmployee = async (employeeId, data) => {
     throw error;
   }
 };
+
+
+export const fetchAttendanceRecords = async () => {
+  try {
+    const response = await authInstance.get(`/api/candidates/getAll`);
+    console.log("Fetched attendance data", response);
+    return response.data.data; 
+  } catch (error) {
+    console.error("Error fetching attendance records:", error);
+    throw error;
+  }
+};
+
+
+// Update attendance status
+export const updateAttendanceStatus = async (recordId, status) => {
+  try {
+    const response = await authInstance.patch(`/api/candidates/updateStatus/${recordId}`, { status });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating attendance status:", error);
+    throw error;
+  }
+};

@@ -2,7 +2,7 @@ import axios from "axios";
 import CONSTANTS_COMMON from "../Constants/Common";
 import { logout, setCredentials } from '../reduxStore/authSlice/index'
 import store from "../reduxStore/store";
-// import { refreshAccessToken } from "../Services/userService";
+import { refreshAccessToken } from "../services/authService";
 
 export const authInstance = axios.create({
     baseURL: CONSTANTS_COMMON.API_BASE_URL, 

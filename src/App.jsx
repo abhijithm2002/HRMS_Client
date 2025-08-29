@@ -6,6 +6,7 @@ import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import AddCandidateModal from "./components/dashboard/AddCandidateModal";
 import Employees from "./components/dashboard/Table/Employees";
+import AttendanceDashboard from "./components/dashboard/Table/Attendence";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/modal" element={<AddCandidateModal />} />
         <Route path="/employees" element={<Employees />} />
+        <Route path="/attendance" element={<AttendanceDashboard />} />
       </Routes>
     </Router>
   );

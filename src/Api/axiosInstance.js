@@ -2,7 +2,7 @@ import axios from "axios";
 import CONSTANTS_COMMON from "../Constants/Common";
 import { logout, setCredentials } from '../reduxStore/authSlice/index'
 import store from "../reduxStore/store";
-import { refreshAccessToken } from "../services/authService";
+// import { refreshAccessToken } from "../services/authService";
 
 export const authInstance = axios.create({
     baseURL: CONSTANTS_COMMON.API_BASE_URL, 
@@ -39,7 +39,7 @@ authInstance.interceptors.response.use(
 
             try {
                 const { user } = store.getState().auth;
-                const { accessToken } = await refreshAccessToken();
+                // const { accessToken } = await refreshAccessToken();
                 store.dispatch(setCredentials({ accessToken, user }));
                 originalRequest.headers.authorization = `Bearer ${accessToken}`;
                 return authInstance(originalRequest);

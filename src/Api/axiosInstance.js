@@ -1,5 +1,5 @@
 import axios from "axios";
-import CONSTANTS_COMMON from "../Constants/Common";
+import CONSTANTS_COMMON from "../constants/common";
 import { logout, setCredentials } from '../reduxStore/authSlice/index'
 import store from "../reduxStore/store";
 // import { refreshAccessToken } from "../services/authService";

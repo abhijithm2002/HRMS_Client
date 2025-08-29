@@ -2,7 +2,8 @@
 .candidates-table-container {
   background-color: white;
   border-radius: 0.5rem;
-  overflow: hidden;
+  /* Crucial: Allow content to overflow this container */
+  overflow: visible; 
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -10,6 +11,8 @@
   width: 100%;
   border-collapse: collapse;
   font-family: 'Roboto', sans-serif;
+  /* Ensure the table itself allows overflow */
+  overflow: visible; 
 }
 
 /* Table Header */
@@ -38,6 +41,8 @@
 .table-row {
   border-bottom: 1px solid #e5e7eb;
   transition: background-color 0.2s;
+  /* Ensure table rows allow overflow */
+  overflow: visible; 
 }
 
 .table-row:hover {
@@ -54,6 +59,8 @@
   color: #374151;
   border: none;
   vertical-align: middle;
+  /* Important: Allow content to overflow from table cells */
+  overflow: visible; 
 }
 
 .table-row td:first-child {
@@ -106,6 +113,10 @@
 .candidate-action {
   width: 80px;
   text-align: center;
+  /* Critical: Position the cell relative to its content */
+  position: relative; 
+  /* Give it a higher z-index to ensure it sits on top of other cells */
+  z-index: 10;
 }
 
 /* Status Styling */
@@ -203,38 +214,50 @@
 }
 
 /* Action Dropdown */
-.action-dropdown {
+.action-dropdown-menu {
   position: absolute;
   top: 100%;
   right: 0;
-  margin-top: 0.5rem;
-  background-color: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  min-width: 200px;
   z-index: 100;
-  overflow: hidden;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 120px;
+  margin-top: 8px;
+  padding: 4px 0;
+  list-style: none;
 }
 
+/* Styles for the dropdown items */
 .dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.9rem 1rem;
-  color: #374151;
-  background: none;
-  border: none;
+  display: block;
   width: 100%;
+  padding: 10px 16px;
   text-align: left;
+  background-color: transparent;
+  border: none;
   cursor: pointer;
-  font-size: 0.875rem;
-  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: #333;
   transition: background-color 0.2s;
 }
 
 .dropdown-item:hover {
-  background-color: #f9fafb;
+  background-color: #f5f5f5;
+}
+
+.dropdown-item.delete {
+  color: #e53e3e; 
+}
+
+.dropdown-item.delete:hover {
+  background-color: #ffebeb;
+}
+
+.relative {
+  position: relative;
+  display: inline-block;
 }
 
 .dropdown-item:first-child {

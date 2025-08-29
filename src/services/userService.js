@@ -27,3 +27,30 @@ export const updateCandidateStatus = async (candidateId, status) => {
     throw error;
   }
 };
+
+export const fetchEmployees = async () => {
+  const response = await authInstance.get(`/api/candidates/getAllEmployees` );
+  console.log("fetched data", response)
+  return response.data.data; 
+};
+
+export const deleteEmployee = async (employeeId) => {
+  try {
+    const response = await authInstance.delete(`/api/candidates/deleteEmployee/${employeeId}`);
+    console.log("deleted employee", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting employee:", error);
+    throw error;
+  }
+};
+
+export const updateEmployee = async (employeeId, data) => {
+  try {
+    const response = await authInstance.patch(`/api/candidates/updateEmployee/${employeeId}`, data);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating employee:", error);
+    throw error;
+  }
+};

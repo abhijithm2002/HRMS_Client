@@ -1,12 +1,13 @@
+
 import React, { useState, useEffect } from 'react';
 import './Dashboard.css';
-import Sidebar from './dashboard/Sidebar';
-import CandidatesTable from './dashboard/CandidatesTable';
+import Sidebar from '../components/dashboard/Sidebar'
+import ReusableTable from './dashboard/Table/ReusableTable';
 import { useAuth } from '../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import { useDisclosure } from "@heroui/react";
 import AddCandidateModal from './dashboard/AddCandidateModal';
-import { fetchCandidates } from '../services/userService';
+import { fetchCandidates, updateCandidateStatus } from '../services/userService';
 
 const Dashboard = () => {
   const { isAuthenticated, loading, logout } = useAuth();
@@ -17,7 +18,6 @@ const Dashboard = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [candidates, setCandidates] = useState([]);
 
-  // 🔹 Function to fetch candidates
   const getCandidates = async () => {
     try {
       const data = await fetchCandidates();
@@ -28,7 +28,6 @@ const Dashboard = () => {
     }
   };
 
-  // 🔹 Fetch on mount
   useEffect(() => {
     getCandidates();
   }, []);
@@ -48,14 +47,20 @@ const Dashboard = () => {
     return matchesSearch && matchesStatus && matchesPosition;
   });
 
-  const handleStatusChange = (candidateId, newStatus) => {
-    setCandidates(prev =>
-      prev.map(candidate =>
-        candidate._id === candidateId
-          ? { ...candidate, status: newStatus }
-          : candidate
-      )
-    );
+  const handleStatusChange = async (candidateId, newStatus) => {
+    try {
+      await updateCandidateStatus(candidateId, newStatus);
+      setCandidates(prev =>
+        prev.map(candidate =>
+          candidate._id === candidateId
+            ? { ...candidate, status: newStatus }
+            : candidate
+        )
+      );
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      alert("Failed to update status. Please try again.");
+    }
   };
 
   const handleCandidateAction = (candidateId, action) => {
@@ -71,6 +76,70 @@ const Dashboard = () => {
 
   if (loading) return <div className="loading">Loading...</div>;
   if (!isAuthenticated) return <Navigate to="/login" />;
+
+  const candidatesColumns = [
+    { header: 'Sr no.', className: 'sr-no', cell: (item, index) => String(index + 1).padStart(2, '0') },
+    { header: 'Candidates Name', className: 'candidate-name', cell: (item) => item.name },
+    { header: 'Email Address', className: 'candidate-email', cell: (item) => item.email },
+    { header: 'Phone Number', className: 'candidate-phone', cell: (item) => item.phone },
+    { header: 'Position', className: 'candidate-position', cell: (item) => item.position },
+    {
+      header: 'Status',
+      className: 'candidate-status',
+      cell: (item) => {
+        const getStatusStyle = (status) => {
+          switch (status) {
+            case 'New': return 'status-new';
+            case 'Selected': return 'status-selected';
+            case 'Rejected': return 'status-rejected';
+            default: return 'status-default';
+          }
+        };
+
+        if (item.status === 'Selected') {
+          return (
+            <span className={`status-badge ${getStatusStyle(item.status)}`}>
+              {item.status}
+            </span>
+          );
+        } else {
+          return (
+            <select
+              value={item.status}
+              onChange={(e) => handleStatusChange(item._id, e.target.value)}
+              className={`status-select ${getStatusStyle(item.status)}`}
+            >
+              <option value="New">New</option>
+              <option value="Scheduled">Scheduled</option>
+              <option value="Ongoing">Ongoing</option>
+              <option value="Selected">Selected</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          );
+        }
+      }
+    },
+    { header: 'Experience', className: 'candidate-experience', cell: (item) => item.experience },
+    {
+      header: 'Action',
+      className: 'candidate-action',
+      cell: (item) => (
+        <div className="relative">
+          <button
+            className="action-btn"
+            onClick={() => handleActionClick(item._id)}
+            aria-label="Actions"
+          >
+            <svg className="ellipsis-icon" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+            </svg>
+          </button>
+
+        </div>
+      )
+    }
+  ];
+
 
   return (
     <div className="dashobard">
@@ -195,10 +264,10 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <CandidatesTable
-              candidates={filteredCandidates}
-              onStatusChange={handleStatusChange}
-              
+            <ReusableTable
+              data={filteredCandidates}
+              columns={candidatesColumns}
+
             />
           </div>
         </main>

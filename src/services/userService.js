@@ -70,8 +70,9 @@ export const fetchAttendanceRecords = async () => {
 
 // Update attendance status
 export const updateAttendanceStatus = async (recordId, status) => {
+      console.log('entered status change', recordId, status)
   try {
-    const response = await authInstance.patch(`/api/candidates/updateStatus/${recordId}`, { status });
+    const response = await authInstance.patch(`/api/candidates/updateAttendenceStatus/${recordId}`, { status });
     return response.data;
   } catch (error) {
     console.error("Error updating attendance status:", error);

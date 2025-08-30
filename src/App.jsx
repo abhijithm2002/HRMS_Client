@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard";
 import AddCandidateModal from "./components/dashboard/AddCandidateModal";
 import Employees from "./components/dashboard/Table/Employees";
 import AttendanceDashboard from "./components/dashboard/Table/Attendence";
+import LogoutModal from "./components/dashboard/Modal/LogoutModal";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/modal" element={<AddCandidateModal />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/attendance" element={<AttendanceDashboard />} />
+        <Route path="/logout" element={<LogoutModal />} />
       </Routes>
     </Router>
   );

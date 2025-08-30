@@ -36,6 +36,7 @@ const AttendanceDashboard = () => {
   });
 
   const handleStatusChange = async (recordId, newStatus) => {
+    console.log('recodrid and new status', recordId, newStatus)
     try {
       await updateAttendanceStatus(recordId, newStatus);
       setAttendanceRecords(prev =>
@@ -67,7 +68,7 @@ const AttendanceDashboard = () => {
     { header: 'Sr no.', className: 'sr-no', cell: (item, index) => String(index + 1).padStart(2, '0') },
     { header: 'Employee Name', className: 'employee-name', cell: (item) => item.name },
     { header: 'Date', className: 'attendance-date', cell: (item) => new Date(item.startDate).toLocaleDateString() },
-    { header: 'Task', className: 'attendance-task', cell: (item) => item.checkIn || '-' },
+    { header: 'Task', className: 'attendance-task', cell: (item) => item.task || '-' },
     { 
       header: 'Status', 
       className: 'attendance-status', 
@@ -75,14 +76,15 @@ const AttendanceDashboard = () => {
         <select
           value={item.status}
           onChange={(e) => handleStatusChange(item._id, e.target.value)}
-          className={`status-select`}
+          className={`status-select border rounded px-2 py-1 
+            ${item.status === "Present" ? "text-green-600 font-semibold" : "text-red-600 font-semibold"}`}
         >
-          <option value="Present">Present</option>
-          <option value="Absent">Absent</option>
-         
+          <option value="Present" className="text-green-600">Present</option>
+          <option value="Absent" className="text-red-600">Absent</option>
         </select>
       )
     },
+    
     {
       header: 'Action',
       className: 'attendance-action',
